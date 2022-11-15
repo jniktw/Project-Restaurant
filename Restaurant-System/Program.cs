@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Restaurant_System.DataAcessLayer;
+using System.Reflection;
+using MediatR;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +12,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 builder.Services.AddDbContext<IContext, Context>(options => options.UseSqlite("Filename=Database"));
 
 var app = builder.Build();
