@@ -21,14 +21,14 @@ namespace Restaurant_System.Handlers
             {
                 return null;
             }
-
+            using StreamWriter file = new("ProductList.txt");
+            foreach (var product in productList)
+            {
+                await file.WriteLineAsync(product.ProductName + " - " + ( product.RequiredNumber - product.ActualNumber) + " " + product.Unit);
+            }
             return productList;
         }
     }
 
     public record ListProductListCommand : IRequest<IEnumerable<Product>>; 
-    public class ListProductResult
-    {
-
-    }
 }
