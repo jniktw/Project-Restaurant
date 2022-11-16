@@ -8,9 +8,8 @@ namespace Restaurant_System.DataAcessLayer.Models
 {
     public class Product
     {
-        public Product(int id, string productName, int actualNumber, int requiredNumber, string unit)
+        public Product(string productName, int actualNumber, int requiredNumber, string unit)
         {
-            Id = id;
             ProductName = productName;
             ActualNumber = actualNumber;
             RequiredNumber = requiredNumber;
