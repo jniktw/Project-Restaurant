@@ -15,11 +15,18 @@ namespace Restaurant_System.Controllers
         {
             _mediator = mediator;
         }
-        [HttpGet(Name = "ListCustomers")]
+        [HttpGet()]
 
         public async Task<IEnumerable<Product>> Get()
         {
             return await _mediator.Send(new ListProductListCommand());
+        }
+
+        [HttpPost()]
+
+        public async Task Post( [FromBody] AddProductCommand command )
+        {
+            await _mediator.Send(command);
         }
 
     }
