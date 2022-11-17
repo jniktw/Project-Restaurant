@@ -5,7 +5,9 @@ VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Restaurant-System", "Restaurant-System.csproj", "{4366870A-25EF-4F91-AED6-6791A210C8DA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Restaurant-System.DataAccessLayer", "..\Restaurant-System.DataAcessLayer\Restaurant-System.DataAccessLayer.csproj", "{BC515C60-CA7D-4AF7-A5B7-05D44517F0DB}"
+
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restaurant-System.DataAcessLayer", "..\Restaurant-System.DataAcessLayer\Restaurant-System.DataAcessLayer.csproj", "{BC515C60-CA7D-4AF7-A5B7-05D44517F0DB}"
+
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

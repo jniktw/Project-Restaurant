@@ -14,7 +14,6 @@ namespace Restaurant_System.Controllers
         public ProductListController(IMediator mediator)
         {
             _mediator = mediator;
-
         }
         [HttpPut()]
 
