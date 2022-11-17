@@ -6,7 +6,7 @@ namespace Restaurant_System.Handlers
 {
     public class AddProductHandler : IRequestHandler<AddProductCommand>
     {
-        private IContext _context;
+        private readonly IContext _context;
 
         public AddProductHandler(IContext context)
         {
