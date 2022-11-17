@@ -5,16 +5,16 @@ using Restaurant_System.DataAcessLayer.Models;
 
 namespace Restaurant_System.Handlers
 {
-    public class PutProductHandler : IRequestHandler<PutProductCommand>
+    public class UpdateProductHandler : IRequestHandler<UpdateProductCommand>
     {
         private readonly IContext _context;
 
-        public PutProductHandler(IContext context)
+        public UpdateProductHandler(IContext context)
         {
             _context = context;
         }
 
-        async Task<Unit> IRequestHandler<PutProductCommand, Unit>.Handle(PutProductCommand request, CancellationToken cancellationToken)
+        async Task<Unit> IRequestHandler<UpdateProductCommand, Unit>.Handle(UpdateProductCommand request, CancellationToken cancellationToken)
         {
             var product = _context.Products.First(x => x.Id == request.id);
                 product.ProductName = request.ProductName;
@@ -27,5 +27,5 @@ namespace Restaurant_System.Handlers
         }
     }
 
-    public record PutProductCommand(string ProductName, int ActualNumber, int RequiredNumber, string Unit, int id ) : IRequest;
+    public record UpdateProductCommand(string ProductName, int ActualNumber, int RequiredNumber, string Unit, int id ) : IRequest;
 }

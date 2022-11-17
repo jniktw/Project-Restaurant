@@ -15,13 +15,7 @@ namespace Restaurant_System.Handlers
 
         public Task<Unit> Handle(AddProductCommand request, CancellationToken cancellationToken)
         {
-            var product = new Product
-            {
-                ProductName = request.ProductName,
-                ActualNumber = request.ActualNumber,
-                Unit = request.Unit,
-                RequiredNumber = request.RequiredNumber
-            };
+            var product = new Product(request.ProductName, request.ActualNumber, request.RequiredNumber, request.Unit);
             _context.Products.Add(product);
             _context.SaveChangesAsync();
             return Unit.Task;

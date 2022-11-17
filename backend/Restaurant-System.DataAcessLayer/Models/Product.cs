@@ -8,13 +8,13 @@ namespace Restaurant_System.DataAcessLayer.Models
 {
     public class Product
     {
-        //public Product(string productName, int actualNumber, int requiredNumber, string unit)
-        //{
-        //    ProductName = productName;
-        //    ActualNumber = actualNumber;
-        //    RequiredNumber = requiredNumber;
-        //    Unit = unit;
-        //}
+        public Product(string productName, int actualNumber, int requiredNumber, string unit)
+        {
+            ProductName = productName;
+            ActualNumber = actualNumber;
+            RequiredNumber = requiredNumber;
+            Unit = unit;
+        }
 
         public int Id { get; set; }
         public string ProductName { get; set; }

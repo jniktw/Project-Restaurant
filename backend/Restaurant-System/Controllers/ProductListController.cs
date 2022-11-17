@@ -18,7 +18,7 @@ namespace Restaurant_System.Controllers
         }
         [HttpPut()]
 
-        public async Task Put([FromBody] PutProductCommand command)
+        public async Task Put([FromBody] UpdateProductCommand command)
         {
             await _mediator.Send(command);
         }
