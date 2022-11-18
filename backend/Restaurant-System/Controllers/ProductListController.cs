@@ -15,13 +15,18 @@ namespace Restaurant_System.Controllers
         {
             _mediator = mediator;
         }
+        [HttpPut()]
+
+        public async Task Put([FromBody] UpdateProductCommand command)
+        {
+            await _mediator.Send(command);
+        }
         [HttpGet()]
 
         public async Task<IEnumerable<Product>> Get()
         {
             return await _mediator.Send(new ListProductListCommand());
         }
-
         [HttpPost()]
 
         public async Task Post( [FromBody] AddProductCommand command )
