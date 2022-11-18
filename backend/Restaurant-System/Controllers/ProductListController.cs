@@ -21,12 +21,11 @@ namespace Restaurant_System.Controllers
         {
             await _mediator.Send(command);
         }
-
         [HttpGet()]
 
-        public async Task Get([FromBody] ListProductListCommand command)
+        public async Task<IEnumerable<Product>> Get()
         {
-            await _mediator.Send(command);
+            return await _mediator.Send(new ListProductListCommand());
         }
         [HttpPost()]
 

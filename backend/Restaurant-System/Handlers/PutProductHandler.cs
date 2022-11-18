@@ -14,14 +14,14 @@ namespace Restaurant_System.Handlers
             _context = context;
         }
 
-        async Task<Unit> IRequestHandler<UpdateProductCommand, Unit>.Handle(UpdateProductCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
         {
             var product = _context.Products.First(x => x.Id == request.id);
-                product.ProductName = request.ProductName;
-                product.ActualNumber = request.ActualNumber;
-                product.Unit = request.Unit;
-                product.RequiredNumber = request.RequiredNumber;
-                _context.Products.Update(product);
+            product.ProductName = request.ProductName;
+            product.ActualNumber = request.ActualNumber;
+            product.Unit = request.Unit;
+            product.RequiredNumber = request.RequiredNumber;
+            _context.Products.Update(product);
             await _context.SaveChangesAsync();
             return await Unit.Task;
         }
