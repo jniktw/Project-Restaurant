@@ -14,7 +14,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 builder.Services.AddDbContext<IContext, Context>(options => options.UseSqlite("Filename=Database"));
-
+builder.Services.AddCors(options => options.AddDefaultPolicy(policy =>
+{
+    policy.AllowAnyOrigin();
+}));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -25,6 +28,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors();
 
 app.UseAuthorization();
 

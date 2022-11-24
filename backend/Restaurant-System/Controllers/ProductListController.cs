@@ -21,6 +21,7 @@ namespace Restaurant_System.Controllers
         {
             await _mediator.Send(command);
         }
+        
         [HttpGet()]
 
         public async Task<IEnumerable<Product>> Get()
