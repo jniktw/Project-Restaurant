@@ -11,14 +11,22 @@ export default function ListProduct({}) {
     }
     fetchProductList();
   },[])
-    return (<>
+    return (
+      <div>
+      <p>Nazwa produktu --- Aktualna ilość[jednostka]</p>
+    <>
       {
+        
         products.map((product) => {
-         return (<div key={product.id}>{product.productName}</div>)
+         return (
+          <div> 
+            <li key={product.id}>{product.productName} --- {product.actualNumber}[{product.unit}]</li>
+          </div>
+        )
         })
-
       }
-    </>);
+    </>
+      </div>);
 }
 
 
