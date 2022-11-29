@@ -2,17 +2,17 @@
 {
     public class Restaurant
     {
-        int Id { get; set; }
-        string Name { get; set; }
-        string City { get; set; }
-        string Address { get; set; }
-        ICollection<Table> Tables { get; set; }
-        public Restaurant(string name, string city, string address, ICollection<Table> tables)
+        public Restaurant(string name, string city, string address)
         {
             Name = name;
             City = city;
             Address = address;
-            Tables = tables;
         }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string City { get; set; }
+        public string Address { get; set; }
+        public ICollection<Table> Tables { get; set; } = new List<Table>();
+        
     }
 }
