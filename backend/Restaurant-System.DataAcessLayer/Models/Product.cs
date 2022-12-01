@@ -15,7 +15,6 @@ namespace Restaurant_System.DataAcessLayer.Models
             RequiredNumber = requiredNumber;
             Unit = unit;
         }
-
         public int Id { get; set; }
         public string ProductName { get; set; }
         public int ActualNumber { get; set; }

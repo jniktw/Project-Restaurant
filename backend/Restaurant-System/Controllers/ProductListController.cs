@@ -35,5 +35,10 @@ namespace Restaurant_System.Controllers
             await _mediator.Send(command);
         }
 
+        [HttpDelete()]
+        public async Task Delete([FromBody] RemoveProductCommand command)
+        {
+            await _mediator.Send(command);
+        }
     }
 }
