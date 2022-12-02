@@ -16,12 +16,11 @@ namespace Restaurant_System.Handlers
 
         public Task<Unit> Handle(RemoveProductCommand request, CancellationToken cancellationToken)
         {
-            var product = new Product(request.ProductName,request.ActualNumber,request.RequiredNumber,request.Unit);
             _context.Products.Where(t => t.ProductName.Equals(request.ProductName)).ExecuteDeleteAsync();
             _context.SaveChangesAsync();
             return Unit.Task;
         }
     }
 
-    public record RemoveProductCommand(string ProductName, int ActualNumber, int RequiredNumber, string Unit) : IRequest;
+    public record RemoveProductCommand(string ProductName) : IRequest;
 }
