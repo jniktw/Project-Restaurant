@@ -8,16 +8,24 @@ namespace Restaurant_System.DataAcessLayer.Models
 {
     public class Table
     {
-        public int Id { get; set; }
+        public int IdTable { get; set; }
 
-        public int NumberOfTable { get; set; }
+        public int IdRestaurant { get; set; }
+
+        public int IdRoom { get; set; }
 
         public int NumberOfSits { get; set; }
 
-        public Table(int numberOfTable, int numberOfSits)
+        public bool IsReserved { get; set; }
+
+
+
+        public Table(int idRestaurant, int idRoom, int numberOfSits, bool isReserved)
         {
-            NumberOfTable = numberOfTable;
+            IdRestaurant = idRestaurant;
+            IdRoom = idRoom;
             NumberOfSits = numberOfSits;
+            IsReserved = isReserved;
         }
     }
 }
