@@ -29,7 +29,7 @@ namespace Restaurant_System.Handlers
                 {
                     reservation = "reserved";
                 }
-                await file.WriteLineAsync(table.IdTable + " Table in " + table.IdRoom + "room with " + table.NumberOfSeats + " seats" + "is " + reservation;
+                await file.WriteLineAsync(table.IdTable + " Table in " + table.IdRoom + "room with " + table.NumberOfSeats + " seats" + "is " + reservation);
             }
             return Table;
         }
