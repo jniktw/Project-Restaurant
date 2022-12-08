@@ -19,7 +19,6 @@ namespace Restaurant_System.DataAcessLayer.Models
         public bool IsReserved { get; set; }
 
 
-
         public Table(int idRestaurant, int idRoom, int numberOfSits, bool isReserved)
         {
             IdRestaurant = idRestaurant;
