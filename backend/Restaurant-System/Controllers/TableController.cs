@@ -31,7 +31,7 @@ namespace Restaurant_System.Controllers
         }
         [HttpPost()]
 
-        public async Task Post( [FromBody] AddListCommand command )
+        public async Task Post( [FromBody] AddTableCommand command )
         {
             await _mediator.Send(command);
         }

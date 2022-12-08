@@ -16,7 +16,7 @@ namespace Restaurant_System.Handlers
 
         public Task<Unit> Handle(RemoveTableCommand request, CancellationToken cancellationToken)
         {
-            _context.Products.Where(t => t.IdTable.Equals(request.IdTable)).ExecuteDeleteAsync();
+            _context.Tables.Where(t => t.IdTable.Equals(request.IdTable)).ExecuteDeleteAsync();
             _context.SaveChangesAsync();
             return Unit.Task;
         }

@@ -5,7 +5,7 @@ using Restaurant_System.DataAcessLayer.Models;
 
 namespace Restaurant_System.Handlers
 {
-    public class ListTableHandler : IRequestHandler<ListTableCommand,IEnumerable<Product>>
+    public class ListTableHandler : IRequestHandler<ListTableCommand,IEnumerable<Table>>
     {
         private readonly IContext _context;
 

@@ -15,7 +15,7 @@ namespace Restaurant_System.Handlers
 
         public async Task<Unit> Handle(UpdateTableCommand request, CancellationToken cancellationToken)
         {
-            var table = _context.Tables.First(x => x.Id == request.id);
+            var table = _context.Tables.First(t => t.IdTable == request.IdTable);
             table.IdRestaurant = request.IdRestaurant;
             table.IdRoom = request.IdRoom;
             table.NumberOfSeats = request.NumberOfSeats;
@@ -27,5 +27,5 @@ namespace Restaurant_System.Handlers
         }
     }
 
-    public record UpdateTableCommand(int IdRestaurant, int IdRoom, int NumberOfSeats, bool IsReserved) : IRequest;
+    public record UpdateTableCommand(int IdTable, int IdRestaurant, int IdRoom, int NumberOfSeats, bool IsReserved) : IRequest;
 }
