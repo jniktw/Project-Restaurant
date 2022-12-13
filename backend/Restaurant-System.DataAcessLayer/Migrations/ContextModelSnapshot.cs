@@ -73,18 +73,36 @@ namespace RestaurantSystem.DataAcessLayer.Migrations
                     b.Property<int>("IdRestaurant")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("IdRoom")
-                        .HasColumnType("INTEGER");
-
                     b.Property<bool>("IsReserved")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("NumberOfSeats")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("RestaurantId")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("IdTable");
 
+                    b.HasIndex("RestaurantId");
+
                     b.ToTable("Tables");
+                });
+
+            modelBuilder.Entity("Restaurant_System.DataAcessLayer.Models.Table", b =>
+                {
+                    b.HasOne("Restaurant_System.DataAcessLayer.Models.Restaurant", "Restaurant")
+                        .WithMany("Tables")
+                        .HasForeignKey("RestaurantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Restaurant");
+                });
+
+            modelBuilder.Entity("Restaurant_System.DataAcessLayer.Models.Restaurant", b =>
+                {
+                    b.Navigation("Tables");
                 });
 #pragma warning restore 612, 618
         }
