@@ -66,11 +66,8 @@ namespace RestaurantSystem.DataAcessLayer.Migrations
 
             modelBuilder.Entity("Restaurant_System.DataAcessLayer.Models.Table", b =>
                 {
-                    b.Property<int>("IdTable")
+                    b.Property<int>("TableId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("IdRestaurant")
                         .HasColumnType("INTEGER");
 
                     b.Property<bool>("IsReserved")
@@ -82,7 +79,7 @@ namespace RestaurantSystem.DataAcessLayer.Migrations
                     b.Property<int>("RestaurantId")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("IdTable");
+                    b.HasKey("TableId");
 
                     b.HasIndex("RestaurantId");
 

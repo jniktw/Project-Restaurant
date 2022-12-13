@@ -11,19 +11,19 @@ namespace Restaurant_System.DataAcessLayer.Models
     public class Table
     {
         [Key]
-        public int IdTable { get; set; }
+        public int TableId { get; set; }
         
         public int NumberOfSeats { get; set; }
 
         public bool IsReserved { get; set; }
 
-        public int IdRestaurant { get; set; }
+        public int RestaurantId { get; set; }
         public Restaurant Restaurant { get; set; }
 
 
-        public Table(int idRestaurant, int numberOfSeats, bool isReserved)
+        public Table(int restaurantId, int numberOfSeats, bool isReserved)
         {
-            IdRestaurant = idRestaurant;
+            RestaurantId = restaurantId;
             NumberOfSeats = numberOfSeats;
             IsReserved = isReserved;
         }
