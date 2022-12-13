@@ -21,7 +21,6 @@ namespace Restaurant_System.Handlers
             {
                 return null;
             }
-            using StreamWriter file = new("Table.txt");
             foreach (var table in Table)
             {
                 string reservation = "not reserved";
