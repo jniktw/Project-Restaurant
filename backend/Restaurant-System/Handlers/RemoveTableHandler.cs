@@ -16,11 +16,11 @@ namespace Restaurant_System.Handlers
 
         public Task<Unit> Handle(RemoveTableCommand request, CancellationToken cancellationToken)
         {
-            _context.Tables.Where(t => t.IdTable.Equals(request.IdTable)).ExecuteDeleteAsync();
+            _context.Tables.Where(t => t.TableId.Equals(request.TableId)).ExecuteDeleteAsync();
             _context.SaveChangesAsync();
             return Unit.Task;
         }
     }
 
-    public record RemoveTableCommand(int IdTable) : IRequest;
+    public record RemoveTableCommand(int TableId) : IRequest;
 }

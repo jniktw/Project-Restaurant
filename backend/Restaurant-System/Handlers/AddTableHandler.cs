@@ -15,7 +15,9 @@ namespace Restaurant_System.Handlers
         
         public Task<Unit> Handle(AddTableCommand request, CancellationToken cancellationToken)
         {
-            var table = new Table(request.IdRestaurant, request.IdRoom, request.NumberOfSeats, request.IsReserved);
+            var table = new Table(request.RestaurantId, request.NumberOfSeats, request.IsReserved);
+
+            // Make check for RestaurantId
             _context.Tables.Add(table);
             _context.SaveChangesAsync();
             return Unit.Task;
