@@ -89,10 +89,10 @@ export default function ListProduct({}) {
 
         onCreateEmployee=()=>{
           let empInfo={
-                Id:this.refs.Id.value,
-                Name:this.refs.Name.value,
-                Location:this.refs.Location.value,
-                Salary:this.refs.Salary.value
+            ProductName:this.refs.ProductName.value,
+            ActualNumber:this.refs.ActualNumber.value,
+            RequiredNumber:this.refs.RequiredNumber.value,
+            Unit:this.refs.Unit.value
           
               };
               fetch('https://localhost:7117/ProductList',{
@@ -148,10 +148,10 @@ export default function ListProduct({}) {
     
   // function onCreateEmployee(ref){
   //   let product={
-  //         ProductName:ref.ProductName.value,
-  //         ActualNumber:ref.ActualNumber.value,
-  //         RequiredNumber:ref.RequiredNumber.value,
-  //         Unit:ref.Unit.value
+          // ProductName:ref.ProductName.value,
+          // ActualNumber:ref.ActualNumber.value,
+          // RequiredNumber:ref.RequiredNumber.value,
+          // Unit:ref.Unit.value
   //       };
   //     fetch('https://localhost:7117/ProductList',{
   //     method: 'POST',
