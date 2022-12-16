@@ -42,6 +42,20 @@ namespace RestaurantSystem.DataAcessLayer.Migrations
                     b.ToTable("Products");
                 });
 
+            modelBuilder.Entity("Restaurant_System.DataAcessLayer.Models.Reservation", b =>
+                {
+                    b.Property<int>("ReservationId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("ReservationDate")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("ReservationId");
+
+                    b.ToTable("Reservations");
+                });
+
             modelBuilder.Entity("Restaurant_System.DataAcessLayer.Models.Restaurant", b =>
                 {
                     b.Property<int>("Id")
@@ -67,20 +81,23 @@ namespace RestaurantSystem.DataAcessLayer.Migrations
 
             modelBuilder.Entity("Restaurant_System.DataAcessLayer.Models.Table", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("TableId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("NumberOfSits")
+                    b.Property<int>("NumberOfSeats")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("NumberOfTable")
+                    b.Property<int>("ReservationId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("RestaurantId")
+                    b.Property<int>("RestaurantId")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("Id");
+                    b.HasKey("TableId");
+
+                    b.HasIndex("ReservationId")
+                        .IsUnique();
 
                     b.HasIndex("RestaurantId");
 
@@ -89,9 +106,27 @@ namespace RestaurantSystem.DataAcessLayer.Migrations
 
             modelBuilder.Entity("Restaurant_System.DataAcessLayer.Models.Table", b =>
                 {
-                    b.HasOne("Restaurant_System.DataAcessLayer.Models.Restaurant", null)
+                    b.HasOne("Restaurant_System.DataAcessLayer.Models.Reservation", "Reservation")
+                        .WithOne("Table")
+                        .HasForeignKey("Restaurant_System.DataAcessLayer.Models.Table", "ReservationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Restaurant_System.DataAcessLayer.Models.Restaurant", "Restaurant")
                         .WithMany("Tables")
-                        .HasForeignKey("RestaurantId");
+                        .HasForeignKey("RestaurantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Reservation");
+
+                    b.Navigation("Restaurant");
+                });
+
+            modelBuilder.Entity("Restaurant_System.DataAcessLayer.Models.Reservation", b =>
+                {
+                    b.Navigation("Table")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Restaurant_System.DataAcessLayer.Models.Restaurant", b =>

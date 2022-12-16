@@ -3,21 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace Restaurant_System.DataAcessLayer.Models
 {
     public class Table
     {
-        public int Id { get; set; }
+        [Key]
+        public int TableId { get; set; }
+        
+        public int NumberOfSeats { get; set; }
 
-        public int NumberOfTable { get; set; }
+        public int RestaurantId { get; set; }
+        public Restaurant Restaurant { get; set; }
+        
+        public int ReservationId { get; set; }
+        public Reservation Reservation { get; set; }
 
-        public int NumberOfSits { get; set; }
 
-        public Table(int numberOfTable, int numberOfSits)
+        public Table(int restaurantId,  int numberOfSeats, int reservationId)
         {
-            NumberOfTable = numberOfTable;
-            NumberOfSits = numberOfSits;
+            RestaurantId = restaurantId;
+            NumberOfSeats = numberOfSeats;
+            ReservationId = reservationId;
         }
     }
 }
