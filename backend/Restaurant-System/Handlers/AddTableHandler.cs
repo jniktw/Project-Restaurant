@@ -15,14 +15,16 @@ namespace Restaurant_System.Handlers
         
         public Task<Unit> Handle(AddTableCommand request, CancellationToken cancellationToken)
         {
-            var table = new Table(request.RestaurantId, request.NumberOfSeats, request.IsReserved);
-
+            var table = new Table(request.RestaurantId, request.NumberOfSeats, request.ReservationId);
+            
+            
             // Make check for RestaurantId
+            // Make check for ReservationId
             _context.Tables.Add(table);
             _context.SaveChangesAsync();
             return Unit.Task;
         }
     }
 
-    public record AddTableCommand(int IdRestaurant, int IdRoom, int NumberOfSeats, bool IsReserved) : IRequest;
+    public record AddTableCommand(int RestaurantId, int NumberOfSeats, int ReservationId) : IRequest;
 }

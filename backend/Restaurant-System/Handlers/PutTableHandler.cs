@@ -18,13 +18,13 @@ namespace Restaurant_System.Handlers
             var table = _context.Tables.First(t => t.TableId == request.TableId);
             table.RestaurantId = request.RestaurantId;
             table.NumberOfSeats = request.NumberOfSeats;
-            table.IsReserved = request.IsReserved;
-            
+            table.ReservationId = request.ReservationId;
+
             _context.Tables.Update(table);
             await _context.SaveChangesAsync();
             return await Unit.Task;
         }
     }
 
-    public record UpdateTableCommand(int TableId, int RestaurantId, int NumberOfSeats, bool IsReserved) : IRequest;
+    public record UpdateTableCommand(int TableId, int RestaurantId, int NumberOfSeats, int ReservationId) : IRequest;
 }
