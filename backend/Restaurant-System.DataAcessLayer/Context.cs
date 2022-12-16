@@ -10,6 +10,7 @@ namespace Restaurant_System.DataAcessLayer
         DbSet<Product> Products { get; }
         DbSet<Restaurant> Restaurants { get; }
         DbSet<Table> Tables { get; }
+        DbSet<Reservation> Reservations { get; }
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken));
     }
     public class Context : DbContext, IContext
@@ -19,7 +20,8 @@ namespace Restaurant_System.DataAcessLayer
         public DbSet<Product> Products { get; set; } = null!;
         public DbSet<Restaurant> Restaurants { get; set; } = null!;
         public DbSet<Table> Tables { get; set; } = null!;
+        public DbSet<Reservation> Reservations { get; set; } = null!;
         protected override void OnConfiguring(DbContextOptionsBuilder options)
-            => options.UseSqlite($"Filename=Database");
+            => options.UseSqlite($"Filename=Database.sqlite");
     }
 }
