@@ -7,7 +7,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Restaurant_System.DataAcessLayer.Models
 {
-
     public class Table
     {
         [Key]
@@ -15,17 +14,18 @@ namespace Restaurant_System.DataAcessLayer.Models
         
         public int NumberOfSeats { get; set; }
 
-        public bool IsReserved { get; set; }
-
         public int RestaurantId { get; set; }
         public Restaurant Restaurant { get; set; }
+        
+        public int ReservationId { get; set; }
+        public Reservation Reservation { get; set; }
 
 
-        public Table(int restaurantId, int numberOfSeats, bool isReserved)
+        public Table(int restaurantId,  int numberOfSeats, int reservationId)
         {
             RestaurantId = restaurantId;
             NumberOfSeats = numberOfSeats;
-            IsReserved = isReserved;
+            ReservationId = reservationId;
         }
     }
 }
