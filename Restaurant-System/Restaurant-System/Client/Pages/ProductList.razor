@@ -1,0 +1,44 @@
+﻿@page "/productList"
+@using Restaurant_System.Shared
+@inject HttpClient Http
+<PageTitle>Product</PageTitle>
+
+<h3>ProductList</h3>
+@if (products == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Actual Number</th>
+                <th>Required Number</th>
+                <th>Unit</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in products)
+            {
+                <tr>
+                    <td>@product.ProductName</td>
+                    <td>@product.ActualNumber</td>
+                    <td>@product.RequiredNumber</td>
+                    <td>@product.Unit</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+@code {
+	private ProductSh[] products;
+	protected override async Task OnInitializedAsync()
+    {
+        products = await Http.GetFromJsonAsync<ProductSh[]>("ProductList");
+    }
+
+}
