@@ -12,6 +12,49 @@
 }
 else
 {
+    <button class="btn-primary" @onclick="Showpopup">Add new record</button>
+    @if (popup)
+    {
+        <div class="modal" tabindex="-1" role="dialog" style="display:block;">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Podaj produkt</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" @onclick="Closepopup">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <EditForm Model="productInserted" OnInvalidSubmit="InsertRec">
+                        <div class="modal-body">
+                            <table border="1">
+                                <tr>
+                                    <td>Product Name</td>
+                                    <td><input type="text" placeholder="Wpisz nazwe produktu" @bind="productInserted.ProductName"/></td>
+                                    </tr>
+                                    <tr>
+                                    <td>Actual Number</td>
+                                    <td><input type="text" placeholder="Wpisz aktualna liczbe produktu" @bind="productInserted.ActualNumber"/></td>
+                                    </tr>
+                                    <tr>
+                                    <td>Required Number</td>
+                                    <td><input type="text" placeholder="Wpisz wymagana liczbe produktu" @bind="productInserted.RequiredNumber"/></td>
+                                   </tr>
+                                   <tr>
+                                    <td>Unit</td>
+                                    <td><input type="text" placeholder="Wpisz jednostkę" @bind="productInserted.Unit"/></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                        <button type="submit" class="btn btn-secondary" data-dismiss="modal" @onclick="InsertRec">Submit</button>
+                        </div>
+                    </EditForm>
+                    
+                    
+                </div>
+            </div>
+        </div>
+    }
     <table class="table">
         <thead>
             <tr>
@@ -43,7 +86,8 @@ else
 
 @code {
     private List<ProductSh> products;
-
+    bool popup = false;
+    ProductSh productInserted = new ProductSh();
     protected override async Task OnInitializedAsync()
     {
         products = await Http.GetFromJsonAsync<List<ProductSh>>("ProductList");
@@ -65,7 +109,30 @@ else
     }
     public async Task EditProduct()
     {
-       
+
     }
 
+    void Showpopup()
+    {
+        popup =  true;
+    }
+    void Closepopup()
+    {
+        popup =  false;
+    }
+    public async Task InsertRec()
+    {
+        HttpRequestMessage request = new HttpRequestMessage
+            {
+                Content = new StringContent(JsonSerializer.Serialize(productInserted), Encoding.UTF8, "application/json"),
+                Method = HttpMethod.Post,
+                RequestUri = new Uri("https://localhost:7139/ProductList")
+            };
+
+        HttpResponseMessage response = await Http.SendAsync(request);
+        if (response.StatusCode == System.Net.HttpStatusCode.OK)
+        {
+            products.Add(productInserted);
+        }
+    }
 }
