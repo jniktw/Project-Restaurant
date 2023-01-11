@@ -8,6 +8,18 @@
         public int RequiredNumber { get; set; }
         public string Unit { get; set; }
 
+        public ProductSh Copy()
+        {
+            return new ProductSh
+            {
+                Id = this.Id,
+                ProductName = this.ProductName,
+                ActualNumber = this.ActualNumber,
+                RequiredNumber = this.RequiredNumber,
+                Unit = this.Unit
+            };
+        }
     }
    
+
 }

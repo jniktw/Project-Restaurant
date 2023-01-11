@@ -24,7 +24,7 @@ else
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <EditForm Model="productInserted" OnInvalidSubmit="InsertRec">
+                    <EditForm Model="productInserted">
                         <div class="modal-body">
                             <table border="1">
                                 <tr>
@@ -136,23 +136,22 @@ else
 
     void SubmitPopUp()
     {
-
         if (isEdited)
         {
-            UpdateRec();
+            UpdateRec(productInserted.Copy());
         }
         else
         {
-            InsertRec();
+            InsertRec(productInserted.Copy());
         }
         Closepopup();
 
     }
-    public async Task<int> InsertRec()
+    public async Task InsertRec(ProductSh product)
     {
         HttpRequestMessage request = new HttpRequestMessage
             {
-                Content = new StringContent(JsonSerializer.Serialize(productInserted), Encoding.UTF8, "application/json"),
+                Content = new StringContent(JsonSerializer.Serialize(product), Encoding.UTF8, "application/json"),
                 Method = HttpMethod.Post,
                 RequestUri = new Uri("https://localhost:7139/ProductList")
             };
@@ -162,23 +161,21 @@ else
         if (response.StatusCode == System.Net.HttpStatusCode.OK)
         {
             ProductSh productFromResponse = await response.Content.ReadFromJsonAsync<ProductSh>();
-            productInserted.Id = productFromResponse.Id;
-            products.Add(productInserted);
+            product.Id = productFromResponse.Id;
+            products.Add(product);
+            StateHasChanged();
         }
-        return 0;
     }
-    public async Task UpdateRec()
+    public async Task UpdateRec(ProductSh product)
     {
         HttpRequestMessage request = new HttpRequestMessage
             {
-                Content = new StringContent(JsonSerializer.Serialize(productInserted), Encoding.UTF8, "application/json"),
+                Content = new StringContent(JsonSerializer.Serialize(product), Encoding.UTF8, "application/json"),
                 Method = HttpMethod.Put,
                 RequestUri = new Uri("https://localhost:7139/ProductList")
             };
 
         HttpResponseMessage response = await Http.SendAsync(request);
-
-       
     }
 
 }
