@@ -14,13 +14,13 @@ namespace Restaurant_System.Handlers
             _context = context;
         }
 
-        public Task<Unit> Handle(RemoveProductCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(RemoveProductCommand request, CancellationToken cancellationToken)
         {
-            _context.Products.Where(t => t.ProductName.Equals(request.ProductName)).ExecuteDeleteAsync();
-            _context.SaveChangesAsync();
-            return Unit.Task;
+            await _context.Products.Where(t => t.Id.Equals(request.Id)).ExecuteDeleteAsync();
+            await _context.SaveChangesAsync();
+            return Unit.Value;
         }
     }
 
-    public record RemoveProductCommand(string ProductName) : IRequest;
+    public record RemoveProductCommand(int Id) : IRequest;
 }

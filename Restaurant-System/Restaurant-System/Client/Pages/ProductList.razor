@@ -46,7 +46,7 @@ else
                             </table>
                         </div>
                         <div class="modal-footer">
-                        <button type="submit" class="btn btn-secondary" data-dismiss="modal" @onclick="InsertRec">Submit</button>
+                        <button type="submit" class="btn btn-secondary" data-dismiss="modal" @onclick="SubmitPopUp">Submit</button>
                         </div>
                     </EditForm>
                     
@@ -74,8 +74,8 @@ else
                     <td>@product.ActualNumber</td>
                     <td>@product.RequiredNumber</td>
                     <td>@product.Unit</td>
-                    <td><button class="btn btn-primary" @onclick="() => DeleteProduct(product)">Delete</button></td>
-                    <td><button class="btn btn-primary" @onclick="EditProduct">Edit</button></td>
+                    <td><button class="btn btn-danger" @onclick="() => DeleteProduct(product)">Delete</button></td>
+                    <td><button class="btn btn-info" @onclick="() => EditProduct(product)">Edit</button></td>
                 </tr>
             }
         </tbody>
@@ -86,12 +86,18 @@ else
 
 @code {
     private List<ProductSh> products;
+
     bool popup = false;
+
+    bool isEdited = false;
+
     ProductSh productInserted = new ProductSh();
+
     protected override async Task OnInitializedAsync()
     {
         products = await Http.GetFromJsonAsync<List<ProductSh>>("ProductList");
     }
+
     public async Task DeleteProduct(ProductSh product)
     {
         HttpRequestMessage request = new HttpRequestMessage
@@ -107,20 +113,42 @@ else
             products = products.Where(u => u != product).ToList();
         }
     }
-    public async Task EditProduct()
+    public async Task EditProduct(ProductSh product)
     {
+        productInserted = product;
+        isEdited = true;
+        Showpopup();
 
     }
+
 
     void Showpopup()
     {
         popup =  true;
     }
+
     void Closepopup()
     {
         popup =  false;
+        productInserted = new ProductSh();
+        isEdited = false;
     }
-    public async Task InsertRec()
+
+    void SubmitPopUp()
+    {
+
+        if (isEdited)
+        {
+            UpdateRec();
+        }
+        else
+        {
+            InsertRec();
+        }
+        Closepopup();
+
+    }
+    public async Task<int> InsertRec()
     {
         HttpRequestMessage request = new HttpRequestMessage
             {
@@ -130,9 +158,27 @@ else
             };
 
         HttpResponseMessage response = await Http.SendAsync(request);
+        response.EnsureSuccessStatusCode();
         if (response.StatusCode == System.Net.HttpStatusCode.OK)
         {
+            ProductSh productFromResponse = await response.Content.ReadFromJsonAsync<ProductSh>();
+            productInserted.Id = productFromResponse.Id;
             products.Add(productInserted);
         }
+        return 0;
     }
+    public async Task UpdateRec()
+    {
+        HttpRequestMessage request = new HttpRequestMessage
+            {
+                Content = new StringContent(JsonSerializer.Serialize(productInserted), Encoding.UTF8, "application/json"),
+                Method = HttpMethod.Put,
+                RequestUri = new Uri("https://localhost:7139/ProductList")
+            };
+
+        HttpResponseMessage response = await Http.SendAsync(request);
+
+       
+    }
+
 }
