@@ -31,6 +31,7 @@ namespace Restaurant_System.Handlers
             foreach(var product in productList)
             {
                 var productSh = new ProductSh {
+                    Id = product.Id,
                     ProductName = product.ProductName,
                     ActualNumber=product.ActualNumber,
                     RequiredNumber = product.RequiredNumber,

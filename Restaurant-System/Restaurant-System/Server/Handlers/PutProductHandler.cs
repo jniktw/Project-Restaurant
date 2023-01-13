@@ -16,7 +16,7 @@ namespace Restaurant_System.Handlers
 
         public async Task<Unit> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
         {
-            var product = _context.Products.First(x => x.Id == request.id);
+            var product = _context.Products.First(x => x.Id == request.Id);
             product.ProductName = request.ProductName;
             product.ActualNumber = request.ActualNumber;
             product.Unit = request.Unit;
@@ -27,5 +27,5 @@ namespace Restaurant_System.Handlers
         }
     }
 
-    public record UpdateProductCommand(string ProductName, int ActualNumber, int RequiredNumber, string Unit, int id) : IRequest;
+    public record UpdateProductCommand(int Id,string ProductName, int ActualNumber, int RequiredNumber, string Unit) : IRequest;
 }

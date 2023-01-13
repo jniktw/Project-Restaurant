@@ -1,5 +1,7 @@
 ﻿@page "/productList"
 @using Restaurant_System.Shared
+@using System.Text
+@using System.Text.Json
 @inject HttpClient Http
 <PageTitle>Product</PageTitle>
 
@@ -10,6 +12,49 @@
 }
 else
 {
+    <button class="btn-primary" @onclick="Showpopup">Add new record</button>
+    @if (popup)
+    {
+        <div class="modal" tabindex="-1" role="dialog" style="display:block;">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Podaj produkt</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" @onclick="Closepopup">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <EditForm Model="productInserted">
+                        <div class="modal-body">
+                            <table border="1">
+                                <tr>
+                                    <td>Product Name</td>
+                                    <td><input type="text" placeholder="Wpisz nazwe produktu" @bind="productInserted.ProductName"/></td>
+                                    </tr>
+                                    <tr>
+                                    <td>Actual Number</td>
+                                    <td><input type="text" placeholder="Wpisz aktualna liczbe produktu" @bind="productInserted.ActualNumber"/></td>
+                                    </tr>
+                                    <tr>
+                                    <td>Required Number</td>
+                                    <td><input type="text" placeholder="Wpisz wymagana liczbe produktu" @bind="productInserted.RequiredNumber"/></td>
+                                   </tr>
+                                   <tr>
+                                    <td>Unit</td>
+                                    <td><input type="text" placeholder="Wpisz jednostkę" @bind="productInserted.Unit"/></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                        <button type="submit" class="btn btn-secondary" data-dismiss="modal" @onclick="SubmitPopUp">Submit</button>
+                        </div>
+                    </EditForm>
+                    
+                    
+                </div>
+            </div>
+        </div>
+    }
     <table class="table">
         <thead>
             <tr>
@@ -17,28 +62,120 @@ else
                 <th>Actual Number</th>
                 <th>Required Number</th>
                 <th>Unit</th>
+                <th>Action</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var product in products)
             {
-                <tr>
+                <tr @key="@product.ProductName">
                     <td>@product.ProductName</td>
                     <td>@product.ActualNumber</td>
                     <td>@product.RequiredNumber</td>
                     <td>@product.Unit</td>
+                    <td><button class="btn btn-danger" @onclick="() => DeleteProduct(product)">Delete</button></td>
+                    <td><button class="btn btn-info" @onclick="() => EditProduct(product)">Edit</button></td>
                 </tr>
             }
         </tbody>
     </table>
+    
 }
 
 
 @code {
-	private ProductSh[] products;
-	protected override async Task OnInitializedAsync()
+    private List<ProductSh> products;
+
+    bool popup = false;
+
+    bool isEdited = false;
+
+    ProductSh productInserted = new ProductSh();
+
+    protected override async Task OnInitializedAsync()
     {
-        products = await Http.GetFromJsonAsync<ProductSh[]>("ProductList");
+        products = await Http.GetFromJsonAsync<List<ProductSh>>("ProductList");
+    }
+
+    public async Task DeleteProduct(ProductSh product)
+    {
+        HttpRequestMessage request = new HttpRequestMessage
+            {
+                Content = new StringContent(JsonSerializer.Serialize(product), Encoding.UTF8, "application/json"),
+                Method = HttpMethod.Delete,
+                RequestUri = new Uri("https://localhost:7139/ProductList")
+            };
+
+        HttpResponseMessage response = await Http.SendAsync(request);
+        if (response.StatusCode == System.Net.HttpStatusCode.OK)
+        {
+            products = products.Where(u => u != product).ToList();
+        }
+    }
+    public async Task EditProduct(ProductSh product)
+    {
+        productInserted = product;
+        isEdited = true;
+        Showpopup();
+
+    }
+
+
+    void Showpopup()
+    {
+        popup =  true;
+    }
+
+    void Closepopup()
+    {
+        popup =  false;
+        productInserted = new ProductSh();
+        isEdited = false;
+    }
+
+    void SubmitPopUp()
+    {
+        if (isEdited)
+        {
+            UpdateRec(productInserted.Copy());
+        }
+        else
+        {
+            InsertRec(productInserted.Copy());
+        }
+        Closepopup();
+
+    }
+    public async Task InsertRec(ProductSh product)
+    {
+        HttpRequestMessage request = new HttpRequestMessage
+            {
+                Content = new StringContent(JsonSerializer.Serialize(product), Encoding.UTF8, "application/json"),
+                Method = HttpMethod.Post,
+                RequestUri = new Uri("https://localhost:7139/ProductList")
+            };
+
+        HttpResponseMessage response = await Http.SendAsync(request);
+        response.EnsureSuccessStatusCode();
+        if (response.StatusCode == System.Net.HttpStatusCode.OK)
+        {
+            ProductSh productFromResponse = await response.Content.ReadFromJsonAsync<ProductSh>();
+            product.Id = productFromResponse.Id;
+            products.Add(product);
+            StateHasChanged();
+        }
+    }
+    public async Task UpdateRec(ProductSh product)
+    {
+        HttpRequestMessage request = new HttpRequestMessage
+            {
+                Content = new StringContent(JsonSerializer.Serialize(product), Encoding.UTF8, "application/json"),
+                Method = HttpMethod.Put,
+                RequestUri = new Uri("https://localhost:7139/ProductList")
+            };
+
+        HttpResponseMessage response = await Http.SendAsync(request);
     }
 
 }
